@@ -1,0 +1,26 @@
+.bidder-alias {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  color: rgb(70, 70, 70);
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.is-auto {
+  background-color: rgb(231, 230, 230);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  color: rgb(70, 70, 70);
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
