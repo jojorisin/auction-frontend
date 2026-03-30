@@ -90,7 +90,12 @@ const AuctionDetails = () => {
           <div>
             <div className="position-relative">
               <img
-                src={auction.itemResponse.imageUrls[currentImageIndex]}
+                src={
+                  auction.itemResponse.imageUrls &&
+                  auction.itemResponse.imageUrls.length > 0
+                    ? auction.itemResponse.imageUrls[currentImageIndex]
+                    : "https://placehold.co/200x200?text=No+Image"
+                }
                 alt={auction.itemResponse.title}
                 className="img-fluid"
                 style={{

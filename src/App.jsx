@@ -10,6 +10,9 @@ import AuctionsList from "./pages/AuctionsList";
 import AuctionDetails from "./pages/AuctionDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import MyProfile from "./pages/MyProfile";
+import MyBids from "./pages/MyBids";
+import MyWonAuctions from "./pages/MyWonAuctions";
 import { logoutUser } from "./services/api";
 
 const RootLayout = () => {
@@ -57,7 +60,9 @@ const RootLayout = () => {
           <nav>
             {isLoggedIn ? (
               <div className="d-flex align-items-center">
-                <span className="me-3">My Pages</span>
+                <Link to="/me" className="me-3">
+                  My Pages
+                </Link>
                 <Button variant="outline-secondary" onClick={handleLogout}>
                   Logout
                 </Button>
@@ -90,6 +95,9 @@ const router = createBrowserRouter([
       { path: "auctions/:id", element: <AuctionDetails /> },
       { path: "auth/login", element: <Login /> },
       { path: "auth/register", element: <Register /> },
+      { path: "/me", element: <MyProfile /> },
+      { path: "/me/bids", element: <MyBids /> },
+      { path: "/me/won", element: <MyWonAuctions /> },
     ],
   },
 ]);

@@ -95,6 +95,31 @@ export const getAuctionById = (id) => API.get(`/auctions/${id}`);
 export const placeBid = (id, bidData) =>
   API.post(`/auctions/${id}/bid`, bidData);
 
+//endpoints for logged in user
+
+export const getMe = () => API.get("/me");
+
+export const getMyBids = () => API.get("/me/bids");
+
+export const getMyWonAuctions = () => API.get("/me/won");
+
+export const getAllMyOrders = () => API.get("/me/orders");
+
+export const getMyOrderById = (id) => API.get(`/me/orders/${id}`);
+
+export const getAllMyItems = () => API.get("/me/items");
+
+export const getMyItemById = (id) => API.get(`/me/items/${id}`);
+
+export const updateAddress = (addressData) =>
+  API.put("/me/address", addressData);
+
+export const updateContactInfo = (contactData) =>
+  API.put("/me/contact", contactData);
+
+export const updatePassword = (passwordData) =>
+  API.put("/me/password", passwordData);
+
 // Auth endpoints
 export const registerUser = (registerData) =>
   API.post("/auth/register", registerData);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Card, Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 import {
   getActiveAuctions,
   getCategories,
@@ -47,7 +47,7 @@ const AuctionsList = () => {
         if (selectedSub) params.subCategory = selectedSub;
 
         const response = await getActiveAuctions(params);
-        setAuctions(response.data.content); 
+        setAuctions(response.data.content);
         setLoading(false);
       } catch (err) {
         setError("Kunde inte ladda auktioner. Försök igen senare.");
@@ -55,7 +55,7 @@ const AuctionsList = () => {
       }
     };
     fetchAuctions();
-  }, [selectedCategory, selectedSub]); 
+  }, [selectedCategory, selectedSub]);
 
   const handleCategoryChange = (cat) => {
     setSelectedCategory(cat);
@@ -93,22 +93,31 @@ const AuctionsList = () => {
               {auctions.length > 0 ? (
                 auctions.map((auction) => (
                   <Col key={auction.auctionId} sm={6} lg={4} xl={3}>
-                    <div className="p-3 border rounded shadow-sm">
-                      <h5>{auction.title}</h5>
-                      <img
-                        src={auction.imageUrls[0]}
-                        alt={auction.title}
-                        className="img-fluid"
-                        onClick={() =>
-                          navigate(`/auctions/${auction.auctionId}`)
+                    <Card
+                      className="h-100 shadow-sm border-0"
+                      onClick={() => navigate(`/auctions/${auction.auctionId}`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <Card.Img
+                        variant="top"
+                        src={
+                          auction.imageUrls && auction.imageUrls.length > 0
+                            ? auction.imageUrls[0]
+                            : "https://placehold.co/200x200?text=No+Image"
                         }
+                        style={{ height: "200px", objectFit: "cover" }}
                       />
-                      <p>
-                        {auction.highestBid === 0
-                          ? `Valuation: ${auction.valuation}`
-                          : `Current highest bid: ${auction.highestBid}`}
-                      </p>
-                    </div>
+                      <Card.Body>
+                        <Card.Title className="h6 text-truncate">
+                          {auction.title}
+                        </Card.Title>
+                        <Card.Text className="fw-bold text-primary">
+                          {auction.highestBid === 0
+                            ? `${auction.valuation} SEK (Värdering)`
+                            : `${auction.highestBid} SEK (Högsta bud)`}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
                   </Col>
                 ))
               ) : (
