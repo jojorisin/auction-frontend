@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getAuctionById } from "../services/api";
 import BiddingSection from "../components/BiddingSection";
 
-const AuctionDetails = () => {
+const AuctionPage = () => {
   const { id } = useParams();
   const [auction, setAuction] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -176,4 +176,4 @@ const AuctionDetails = () => {
   );
 };
 
-export default AuctionDetails;
+export default AuctionPage;

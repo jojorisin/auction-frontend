@@ -1,23 +1,24 @@
-import { getMyWonAuctions } from "../services/api";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { Container, Alert, Table, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { getMyBids } from "../services/api";
+import LoadingSpinner from "../components/LoadingSpinner";
+import { Container, Alert, Row, Col, Table, Card } from "react-bootstrap";
 import DateTimeFormatter from "../components/DateTimeFormatter";
 import { useNavigate } from "react-router-dom";
-import "./MyWonAuctions.css";
+import "./MyBidsPage.css";
 
-const MyWonAuctions = () => {
+const MyBidsPage = () => {
   const navigate = useNavigate();
-  const [myWon, setMyWon] = useState([]);
+
   const [loading, setLoading] = useState(true);
+  const [bids, setBids] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMyWonAuctions = async () => {
+    const fetchMyBids = async () => {
       setLoading(true);
       try {
-        const response = await getMyWonAuctions();
-        setMyWon(response.data);
+        const response = await getMyBids();
+        setBids(response.data);
       } catch (err) {
         const errorMessage =
           err.response?.data?.message ||
@@ -27,7 +28,7 @@ const MyWonAuctions = () => {
         setLoading(false);
       }
     };
-    fetchMyWonAuctions();
+    fetchMyBids();
   }, []);
 
   if (loading) {
@@ -41,13 +42,13 @@ const MyWonAuctions = () => {
     );
   }
 
-  if (!myWon) {
-    return <Alert variant="warning">No won auctions available.</Alert>;
+  if (!bids) {
+    return <Alert variant="warning">No bids available.</Alert>;
   }
-  if (myWon.length === 0) {
+  if (bids.length === 0) {
     return (
       <Container className="mt-4">
-        <Alert variant="info">No won auctions available.</Alert>
+        <Alert variant="info">No bids available.</Alert>
       </Container>
     );
   }
@@ -58,25 +59,21 @@ const MyWonAuctions = () => {
         <thead>
           <tr>
             <th></th>
-            <th>item</th>
-            <th>Ended</th>
-            <th>Status</th>
-            <th>Winning bid</th>
+            <th>Item</th>
+            <th>Ends</th>
+            <th>Current highest</th>
+            <th>Your max bid</th>
           </tr>
         </thead>
         <tbody>
-          {myWon.map((auction) => (
-            <tr key={auction.auctionId}>
+          {bids.map((bid) => (
+            <tr key={bid.auctionId}>
               <td>
                 <img
-                  className="my-won-image"
-                  src={
-                    auction.imageUrls && auction.imageUrls.length > 0
-                      ? auction.imageUrls[0]
-                      : "https://placehold.co/200x200?text=No+Image"
-                  }
-                  alt={auction.title}
-                  onClick={() => navigate(`/auctions/${auction.auctionId}`)}
+                  className="my-bids-image"
+                  src={bid.imageUrls[0]}
+                  alt={bid.title}
+                  onClick={() => navigate(`/auctions/${bid.auctionId}`)}
                   style={{
                     width: "200px",
                     height: "200px",
@@ -86,17 +83,25 @@ const MyWonAuctions = () => {
                 />
               </td>
               <td
-                className="my-won-title"
+                className="my-bids-title"
+                onClick={() => navigate(`/auctions/${bid.auctionId}`)}
                 style={{ cursor: "pointer" }}
-                onClick={() => navigate(`/auctions/${auction.auctionId}`)}
               >
-                {auction.auctionId}, {auction.title}
+                {bid.auctionId},{bid.title}
               </td>
               <td>
-                <DateTimeFormatter isoString={auction.endTime} />
+                <DateTimeFormatter isoString={bid.endTime} />
               </td>
-              <td>{auction.status}</td>
-              <td>{auction.highestBid} SEK</td>
+              <td
+                className={
+                  bid.status === "LEADING"
+                    ? "text-success fw-bold"
+                    : "text-danger fw-bold"
+                }
+              >
+                {bid.highestBid} SEK
+              </td>
+              <td>{bid.maxSum} SEK</td>
             </tr>
           ))}
         </tbody>
@@ -105,4 +110,4 @@ const MyWonAuctions = () => {
   );
 };
 
-export default MyWonAuctions;
+export default MyBidsPage;

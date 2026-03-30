@@ -10,12 +10,14 @@ import {
 import { useState, useEffect } from "react";
 import { placeBid } from "../services/api";
 import BidResponse from "./BidResponse";
+import MyMaxBid from "./MyMaxBid";
 
 const BidForm = ({ auctionId, currentHighestBid, increment }) => {
   const [bidAmount, setBidAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [bidResponse, setBidResponse] = useState(null);
+  const [showMaxBid, setShowMaxBid] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
     const minAllowed = currentHighestBid + increment;
 
     if (parseInt(bidAmount) < minAllowed) {
-      setError(`Budet måste vara minst ${minAllowed} kr`);
+      setError(`Bid has to be minimum ${minAllowed} kr`);
       setLoading(false);
       return;
     }
@@ -35,9 +37,10 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
         amount: parseInt(bidAmount),
       });
       setBidResponse(bidResponse.data);
-      setBidAmount(""); // Rensa fältet vid succé
+      setBidAmount("");
+      setShowMaxBid(false);
     } catch (err) {
-      setError(err.response?.data?.message || "Kunde inte lägga bud");
+      setError(err.response?.data?.message || "Error placing bid.");
     } finally {
       setLoading(false);
     }
@@ -65,8 +68,9 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
           variant="primary"
           disabled={loading}
         >
-          {loading ? "Skickar..." : "Lägg bud"}
+          {loading ? "Sending..." : "Place bid"}
         </Button>
+        {showMaxBid && <MyMaxBid auctionId={auctionId} />}
       </Form.Group>
       {bidResponse && <BidResponse bidResponse={bidResponse} />}
       {error && (

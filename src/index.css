@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+@font-face {
+  font-family: "PPEditorial";
+  src: url("./assets/fonts/PPEditorialNew-Ultralight.otf") format("opentype");
+  font-weight: 200; /* Ultralight */
+}
+
+@font-face {
+  font-family: "PPEditorial";
+  src: url("./assets/fonts/PPEditorialNew-Regular.otf") format("opentype");
+  font-weight: 400; /* Regular */
+}
+
+@font-face {
+  font-family: "PPEditorial";
+  src: url("./assets/fonts/PPEditorialNew-Ultrabold.otf") format("opentype");
+  font-weight: 800; /* Ultrabold */
+}
+
+/* Nu kan du använda det så här: */
+h1,
+h2 {
+  font-family: "PPEditorial", serif;
+  font-weight: 400; /* Webbläsaren väljer automatiskt Ultrabold-filen */
+}
+
+p {
+  font-family: "Inter", sans-serif;
+  font-weight: 400; /* Webbläsaren väljer Regular-filen */
+}
+body {
+  font-family: "Inter", sans-serif;
+  font-weight: 400; /* Webbläsaren väljer Regular-filen */
+}

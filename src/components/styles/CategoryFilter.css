@@ -1,0 +1,7 @@
+.category-link {
+  color: rgb(61, 61, 61) !important;
+  font-size: 0.8rem;
+}
+.category-link:hover {
+  color: rgb(142, 142, 142) !important;
+}

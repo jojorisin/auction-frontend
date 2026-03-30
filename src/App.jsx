@@ -5,15 +5,17 @@ import {
   Link,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import AuctionsList from "./pages/AuctionsList";
-import AuctionDetails from "./pages/AuctionDetails";
+import { Button, Nav, Navbar, Container, Row, Col } from "react-bootstrap";
+import AuctionsListPage from "./pages/AuctionsListPage";
+import AuctionPage from "./pages/AuctionPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import MyProfile from "./pages/MyProfile";
-import MyBids from "./pages/MyBids";
-import MyWonAuctions from "./pages/MyWonAuctions";
+import MyPage from "./pages/MyPage";
+import MyBidsPage from "./pages/MyBidsPage";
+import MyWonAuctionsPage from "./pages/MyWonAuctionsPage";
+import ProfileSettingsPage from "./pages/ProfileSettingsPage";
 import { logoutUser } from "./services/api";
+import "./App.css";
 
 const RootLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,32 +54,62 @@ const RootLayout = () => {
 
   return (
     <div>
-      <header className="p-3 bg-light border-bottom mb-4">
-        <div className="d-flex justify-content-between align-items-center">
-          <Link to="/" className="text-decoration-none">
-            <h1 className="mb-0">Bautasten Auktioner</h1>
-          </Link>
-          <nav>
-            {isLoggedIn ? (
-              <div className="d-flex align-items-center">
-                <Link to="/me" className="me-3">
-                  My Pages
-                </Link>
-                <Button variant="outline-secondary" onClick={handleLogout}>
-                  Logout
-                </Button>
-              </div>
-            ) : (
-              <Link to="/auth/login" className="btn btn-outline-primary">
-                Login
-              </Link>
-            )}
-          </nav>
-        </div>
-      </header>
+      <Navbar expand="lg" className="header-nav mb-4">
+        <Container className="d-flex justify-content-between align-items-center">
+          <div className="d-none d-lg-block" style={{ flex: 1 }}></div>
+
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            className="mx-auto text-center"
+            style={{ flex: 2 }}
+          >
+            <h1 className="mb-0 text-light">Bautasten Auktioner</h1>
+          </Navbar.Brand>
+
+          <div
+            className="d-flex justify-content-end align-items-center"
+            style={{ flex: 1 }}
+          >
+            <Navbar.Toggle
+              aria-controls="basic-navbar-nav"
+              className="ms-auto"
+            />
+
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="ms-auto align-items-center">
+                {isLoggedIn ? (
+                  <>
+                    <Nav.Link as={Link} to="/me" className="me-2">
+                      My Pages
+                    </Nav.Link>
+                    <Button
+                      variant="outline-dark"
+                      size="sm"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <Nav.Link
+                    as={Link}
+                    to="/auth/login"
+                    className="btn btn-outline-dark px-4"
+                  >
+                    Login
+                  </Nav.Link>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </div>
+        </Container>
+      </Navbar>
 
       <main>
-        <Outlet />
+        <Container>
+          <Outlet context={{ isLoggedIn }} />
+        </Container>
       </main>
     </div>
   );
@@ -90,14 +122,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <AuctionsList />,
+        element: <AuctionsListPage />,
       },
-      { path: "auctions/:id", element: <AuctionDetails /> },
+      { path: "auctions/:id", element: <AuctionPage /> },
       { path: "auth/login", element: <Login /> },
       { path: "auth/register", element: <Register /> },
-      { path: "/me", element: <MyProfile /> },
-      { path: "/me/bids", element: <MyBids /> },
-      { path: "/me/won", element: <MyWonAuctions /> },
+      { path: "/me", element: <MyPage /> },
+      { path: "/me/bids", element: <MyBidsPage /> },
+      { path: "/me/won", element: <MyWonAuctionsPage /> },
+      { path: "/me/edit", element: <ProfileSettingsPage /> },
     ],
   },
 ]);

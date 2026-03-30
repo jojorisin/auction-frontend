@@ -1,0 +1,7 @@
+.my-pages-card:hover {
+  transform: scale(1.02);
+}
+
+.my-pages-card {
+  transition: transform 0.1s ease-in-out;
+}

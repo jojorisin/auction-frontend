@@ -111,6 +111,9 @@ export const getAllMyItems = () => API.get("/me/items");
 
 export const getMyItemById = (id) => API.get(`/me/items/${id}`);
 
+export const getMyMaxBidForAuction = (id) =>
+  API.get(`/auctions/${id}/my-max-bid`);
+
 export const updateAddress = (addressData) =>
   API.put("/me/address", addressData);
 
