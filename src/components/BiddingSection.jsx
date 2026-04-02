@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; // 1. Importera useEffect här
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Spinner, Alert, Table } from "react-bootstrap";
 import BidForm from "./BidForm";
 import { getBidHistory } from "../services/api";
@@ -10,7 +10,6 @@ const BiddingSection = ({ auction }) => {
   if (!auction) return <Spinner animation="border" />;
   const [loading, setLoading] = useState(true);
   const [bids, setBids] = useState([]);
-  const [bidAmount, setBidAmount] = useState("");
 
   // Get current user ID from JWT token
   const getCurrentUserId = () => {
@@ -49,10 +48,47 @@ const BiddingSection = ({ auction }) => {
   };
 
   useEffect(() => {
+    if (!auction?.auctionId) return;
+
     fetchBidHistory();
 
     const client = new Client({
-      brokerURL: "ws://localhost:8080/ws",
+      brokerURL: import.meta.env.VITE_WEBSOCKET_URL,
+
+      debug: (str) => console.log("STOMP Log: ", str),
+
+      onConnect: () => {
+        console.log("Connected to WebSocket");
+        client.subscribe(`/topic/bids/${auction.auctionId}`, (message) => {
+          const updatedBids = JSON.parse(message.body);
+          setBids(updatedBids);
+        });
+      },
+      onStompError: (frame) => {
+        console.error("Broker reported error: " + frame.headers["message"]);
+        console.error("Additional details: " + frame.body);
+      },
+    });
+
+    client.activate();
+
+    return () => {
+      if (client.active) {
+        console.log("Deactivating WebSocket...");
+        client.deactivate();
+      }
+    };
+  }, [auction?.auctionId]);
+
+  /*useEffect(() => {
+    fetchBidHistory();
+
+    const client = new Client({
+      brokerURL:
+        import.meta.env.VITE_API_BASE_URL.replace("https://", "wss://")
+          .replace("http://", "ws://") // Gör att det fortfarande funkar lokalt
+          .replace("/api", "") + "/ws",
+      // brokerURL: "ws://localhost:8080/ws",
 
       onConnect: () => {
         console.log("Connected to WebSocket");
@@ -69,7 +105,7 @@ const BiddingSection = ({ auction }) => {
     return () => {
       client.deactivate();
     };
-  }, [auction.auctionId]);
+  }, [auction.auctionId]);*/
 
   return (
     <Container className="mt-4">
