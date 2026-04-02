@@ -1,4 +1,5 @@
 import { Container, Row, Col, Nav } from "react-bootstrap";
+import "./styles/CategoryFilter.css";
 
 const CategoryFilter = ({
   categories,
@@ -9,46 +10,48 @@ const CategoryFilter = ({
   onSubChange,
 }) => {
   return (
-    <Container fluid className="p-0">
+    <Container fluid className="p-0 mb-4">
       <Row>
         <Col>
-          <h5 className="mb-3 fw-bold">Kategorier</h5>
-
-          {/* Huvudkategorier i en vertikal lista */}
-          <Nav variant="pills" className="flex-column mb-4">
+          <Nav
+            className="d-flex flex-row flex-nowrap overflow-auto"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
             <Nav.Link
               active={selectedCategory === ""}
-              onClick={() => onCategoryChange("")}
-              className="py-2"
+              onClick={() => {
+                onCategoryChange("");
+                onSubChange("");
+              }}
+              className="category-link"
             >
-              Alla Auktioner
+              ALL
             </Nav.Link>
 
             {categories.map((cat) => (
               <Nav.Link
                 key={cat}
                 active={selectedCategory === cat}
-                onClick={() => onCategoryChange(cat)}
-                className="py-2"
+                onClick={() => {
+                  onCategoryChange(cat);
+                  onSubChange("");
+                }}
+                className="category-link"
               >
                 {cat}
               </Nav.Link>
             ))}
           </Nav>
 
-          {/* subs only shows when a category is selected */}
           {selectedCategory && (
-            <div className="ms-3 border-start ps-3">
-              <p className="text-muted small fw-bold text-uppercase">
-                Underkategorier
-              </p>
-              <Nav className="flex-column">
+            <div className="p-0 m-0">
+              <Nav className="d-flex flex-row flex-wrap">
                 <Nav.Link
                   active={selectedSub === ""}
                   onClick={() => onSubChange("")}
-                  className="py-1 small"
+                  className="category-link"
                 >
-                  Visa allt i {selectedCategory}
+                  ALL
                 </Nav.Link>
 
                 {subCategoryMap[selectedCategory]?.map((sub) => (
@@ -56,7 +59,7 @@ const CategoryFilter = ({
                     key={sub}
                     active={selectedSub === sub}
                     onClick={() => onSubChange(sub)}
-                    className="py-1 small"
+                    className="category-link"
                   >
                     {sub}
                   </Nav.Link>

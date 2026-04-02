@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getAuctionById } from "../services/api";
 import BiddingSection from "../components/BiddingSection";
 
-const AuctionDetails = () => {
+const AuctionPage = () => {
   const { id } = useParams();
   const [auction, setAuction] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -90,7 +90,12 @@ const AuctionDetails = () => {
           <div>
             <div className="position-relative">
               <img
-                src={auction.itemResponse.imageUrls[currentImageIndex]}
+                src={
+                  auction.itemResponse.imageUrls &&
+                  auction.itemResponse.imageUrls.length > 0
+                    ? auction.itemResponse.imageUrls[currentImageIndex]
+                    : "https://placehold.co/200x200?text=No+Image"
+                }
                 alt={auction.itemResponse.title}
                 className="img-fluid"
                 style={{
@@ -171,4 +176,4 @@ const AuctionDetails = () => {
   );
 };
 
-export default AuctionDetails;
+export default AuctionPage;

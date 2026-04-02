@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Card, Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 import {
   getActiveAuctions,
   getCategories,
   getSubCategories,
 } from "../services/api";
 import CategoryFilter from "../components/CategoryFilter";
+import AuctionCard from "../components/AuctionCard";
 
-const AuctionsList = () => {
+const AuctionsListPage = () => {
   const navigate = useNavigate();
   const [auctions, setAuctions] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -47,7 +48,7 @@ const AuctionsList = () => {
         if (selectedSub) params.subCategory = selectedSub;
 
         const response = await getActiveAuctions(params);
-        setAuctions(response.data.content); 
+        setAuctions(response.data.content);
         setLoading(false);
       } catch (err) {
         setError("Kunde inte ladda auktioner. Försök igen senare.");
@@ -55,7 +56,7 @@ const AuctionsList = () => {
       }
     };
     fetchAuctions();
-  }, [selectedCategory, selectedSub]); 
+  }, [selectedCategory, selectedSub]);
 
   const handleCategoryChange = (cat) => {
     setSelectedCategory(cat);
@@ -63,9 +64,9 @@ const AuctionsList = () => {
   };
 
   return (
-    <Container fluid className="mt-4">
+    <Container className="mt-4">
       <Row>
-        <Col md={3} lg={2} className="border-end">
+        <Col xs={12} className="border-end">
           <CategoryFilter
             categories={categories}
             subCategoryMap={subCategoryMap}
@@ -75,11 +76,11 @@ const AuctionsList = () => {
             onSubChange={setSelectedSub}
           />
         </Col>
-        <Col md={9} lg={10} className="ps-4">
+        <Col md={9} lg={10} className="ps-4 bg-light p-3">
           <h2 className="mb-4">
             {selectedCategory
               ? `${selectedCategory} ${selectedSub && `> ${selectedSub}`}`
-              : "Alla Auktioner"}
+              : ""}
           </h2>
 
           {loading ? (
@@ -93,22 +94,10 @@ const AuctionsList = () => {
               {auctions.length > 0 ? (
                 auctions.map((auction) => (
                   <Col key={auction.auctionId} sm={6} lg={4} xl={3}>
-                    <div className="p-3 border rounded shadow-sm">
-                      <h5>{auction.title}</h5>
-                      <img
-                        src={auction.imageUrls[0]}
-                        alt={auction.title}
-                        className="img-fluid"
-                        onClick={() =>
-                          navigate(`/auctions/${auction.auctionId}`)
-                        }
-                      />
-                      <p>
-                        {auction.highestBid === 0
-                          ? `Valuation: ${auction.valuation}`
-                          : `Current highest bid: ${auction.highestBid}`}
-                      </p>
-                    </div>
+                    <AuctionCard
+                      auction={auction}
+                      onClick={() => navigate(`/auctions/${auction.auctionId}`)}
+                    />
                   </Col>
                 ))
               ) : (
@@ -124,4 +113,4 @@ const AuctionsList = () => {
   );
 };
 
-export default AuctionsList;
+export default AuctionsListPage;
