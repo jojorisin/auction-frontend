@@ -3,7 +3,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { Container, Alert, Table, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import DateTimeFormatter from "../components/DateTimeFormatter";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./MyWonAuctionsPage.css";
 
 const MyWonAuctionsPage = () => {
@@ -53,18 +53,18 @@ const MyWonAuctionsPage = () => {
   }
 
   return (
-    <Container>
+    <Container className="p-5">
       <Table
         striped
         borderless
-        className="striped-table justify-content-center align-middle"
+        className="striped-table justify-content-center align-middle shadow-sm"
       >
         <thead>
           <tr>
             <th></th>
             <th>item</th>
             <th>Ended</th>
-            <th>Status</th>
+            <th>Order Status</th>
             <th>Winning bid</th>
           </tr>
         </thead>
@@ -82,8 +82,8 @@ const MyWonAuctionsPage = () => {
                   alt={auction.title}
                   onClick={() => navigate(`/auctions/${auction.auctionId}`)}
                   style={{
-                    width: "200px",
-                    height: "200px",
+                    width: "150px",
+                    height: "150px",
                     objectFit: "cover",
                     cursor: "pointer",
                   }}
@@ -99,7 +99,11 @@ const MyWonAuctionsPage = () => {
               <td>
                 <DateTimeFormatter isoString={auction.endTime} />
               </td>
-              <td>{auction.status}</td>
+              <td className="order-link">
+                <Link to={`/me/orders/${auction.orderId}`}>
+                  {auction.status}
+                </Link>
+              </td>
               <td>{auction.highestBid} SEK</td>
             </tr>
           ))}

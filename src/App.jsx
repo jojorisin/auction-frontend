@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import MyPage from "./pages/MyPage";
 import MyBidsPage from "./pages/MyBidsPage";
 import MyWonAuctionsPage from "./pages/MyWonAuctionsPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
 import ProfileSettingsPage from "./pages/ProfileSettingsPage";
 import { logoutUser } from "./services/api";
 import "./App.css";
@@ -148,6 +149,7 @@ const router = createBrowserRouter([
       { path: "/me/bids", element: <MyBidsPage /> },
       { path: "/me/won", element: <MyWonAuctionsPage /> },
       { path: "/me/edit", element: <ProfileSettingsPage /> },
+      { path: "/me/orders/:id", element: <OrderDetailsPage /> },
     ],
   },
 ]);
