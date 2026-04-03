@@ -19,6 +19,13 @@ import "./App.css";
 
 const RootLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSub, setSelectedSub] = useState("");
+
+  const handleResetFilters = () => {
+    setSelectedCategory("");
+    setSelectedSub("");
+  };
 
   useEffect(() => {
     const checkAuth = () => {
@@ -63,8 +70,9 @@ const RootLayout = () => {
             to="/"
             className="mx-auto text-center"
             style={{ flex: 2 }}
+            onClick={handleResetFilters}
           >
-            <h1 className="mb-0 text-light">Bautasten Auktioner</h1>
+            <h1 className="h1-header mb-0 text-light">Bautasten Auktioner</h1>
           </Navbar.Brand>
 
           <div
@@ -108,7 +116,16 @@ const RootLayout = () => {
 
       <main>
         <Container>
-          <Outlet context={{ isLoggedIn }} />
+          <Outlet
+            context={{
+              isLoggedIn,
+              handleResetFilters,
+              selectedCategory,
+              setSelectedCategory,
+              selectedSub,
+              setSelectedSub,
+            }}
+          />
         </Container>
       </main>
     </div>

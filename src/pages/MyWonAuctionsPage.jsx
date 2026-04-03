@@ -54,7 +54,11 @@ const MyWonAuctionsPage = () => {
 
   return (
     <Container>
-      <Table striped borderless className="justify-content-center align-middle">
+      <Table
+        striped
+        borderless
+        className="striped-table justify-content-center align-middle"
+      >
         <thead>
           <tr>
             <th></th>

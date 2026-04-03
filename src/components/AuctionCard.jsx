@@ -13,7 +13,7 @@ const AuctionCard = ({ auction, onClick }) => {
 
   return (
     <Card
-      className="h-100 shadow-sm border-0"
+      className="w-100 shadow-sm border-0"
       onClick={onClick}
       onMouseEnter={() => hasMultiple && setCurrentImgIndex(1)}
       onMouseLeave={() => setCurrentImgIndex(0)}
