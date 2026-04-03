@@ -1,5 +1,7 @@
 import { Container, Row, Col, Nav } from "react-bootstrap";
 import "./styles/CategoryFilter.css";
+import { formatSnakeCase } from "../utils/formatters";
+import { useRef } from "react";
 
 const CategoryFilter = ({
   categories,
@@ -9,49 +11,69 @@ const CategoryFilter = ({
   selectedSub,
   onSubChange,
 }) => {
-  return (
-    <Container fluid className="p-0 mb-4">
-      <Row>
-        <Col>
-          <Nav
-            className="d-flex flex-row flex-nowrap overflow-auto"
-            style={{ WebkitOverflowScrolling: "touch" }}
-          >
-            <Nav.Link
-              active={selectedCategory === ""}
-              onClick={() => {
-                onCategoryChange("");
-                onSubChange("");
-              }}
-              className="category-link"
-            >
-              ALL
-            </Nav.Link>
+  const scrollRef = useRef(null);
+  const scroll = (offset) => {
+    scrollRef.current.scrollLeft += offset;
+  };
 
-            {categories.map((cat) => (
+  const resetFilters = () => {
+    onCategoryChange("");
+    onSubChange("");
+  };
+  return (
+    <Container fluid className="category-container p-0 mb-4">
+      <Row>
+        <Col className="mb-3">
+          <div className="position-relative d-flex align-items-center">
+            <button className="scroll-arrow left" onClick={() => scroll(-200)}>
+              ‹
+            </button>
+            <Nav
+              ref={scrollRef}
+              className="d-flex flex-row flex-nowrap overflow-auto  hide-scrollbar"
+              style={{
+                scrollBehavior: "smooth",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
               <Nav.Link
-                key={cat}
-                active={selectedCategory === cat}
+                active={selectedCategory === ""}
                 onClick={() => {
-                  onCategoryChange(cat);
-                  onSubChange("");
+                  resetFilters();
                 }}
-                className="category-link"
+                className="category-pill rounded-pill hide-scrollbar"
               >
-                {cat}
+                All
               </Nav.Link>
-            ))}
-          </Nav>
+
+              {categories.map((cat) => (
+                <Nav.Link
+                  key={cat}
+                  active={selectedCategory === cat}
+                  onClick={() => {
+                    onCategoryChange(cat);
+                    onSubChange("");
+                  }}
+                  className="category-pill rounded-pill"
+                >
+                  {formatSnakeCase(cat)}
+                </Nav.Link>
+              ))}
+            </Nav>
+            <button className="scroll-arrow right" onClick={() => scroll(200)}>
+              ›
+            </button>
+          </div>
 
           {selectedCategory && (
             <div className="p-0 m-0">
-              <Nav className="d-flex flex-row flex-wrap">
+              <Nav className="d-flex flex-row flex-nowrap overflow-auto w-100 ">
                 <Nav.Link
                   active={selectedSub === ""}
                   onClick={() => onSubChange("")}
-                  className="category-link"
+                  className="category-pill rounded-pill"
                 >
-                  ALL
+                  All {formatSnakeCase(selectedCategory)}
                 </Nav.Link>
 
                 {subCategoryMap[selectedCategory]?.map((sub) => (
@@ -59,9 +81,9 @@ const CategoryFilter = ({
                     key={sub}
                     active={selectedSub === sub}
                     onClick={() => onSubChange(sub)}
-                    className="category-link"
+                    className="category-pill rounded-pill"
                   >
-                    {sub}
+                    {formatSnakeCase(sub)}
                   </Nav.Link>
                 ))}
               </Nav>

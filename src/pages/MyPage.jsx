@@ -44,19 +44,16 @@ const MyPage = () => {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col xs={12} className="mb-5">
-          <h1>Hello, {user?.email}</h1>
+    <Container className="my-container bg-white">
+      <Row className="mt-5 p-5">
+        <Col xs={12}>
+          <h1 className="fs-5 pb-4">Hello, {user?.email}</h1>
         </Col>
         <Col md={4} sm={6}>
           <Card className="my-pages-card h-100 shadow-sm hover-shadow text-center p-3">
             <Card.Body>
               <Card.Title>My Bids</Card.Title>
-              <Card.Text>View all the auctions you are bidding on.</Card.Text>
-              <Link to="/me/bids" className="stretched-link">
-                Go to Bids
-              </Link>
+              <Link to="/me/bids" className="stretched-link"></Link>
             </Card.Body>
           </Card>
         </Col>
@@ -65,10 +62,7 @@ const MyPage = () => {
           <Card className="my-pages-card h-100 shadow-sm text-center p-3">
             <Card.Body>
               <Card.Title>Won Auctions</Card.Title>
-              <Card.Text>Check out the auctions you have won.</Card.Text>
-              <Link to="/me/won" className="stretched-link">
-                See Won
-              </Link>
+              <Link to="/me/won" className="stretched-link"></Link>
             </Card.Body>
           </Card>
         </Col>
@@ -77,10 +71,7 @@ const MyPage = () => {
           <Card className="my-pages-card h-100 shadow-sm text-center p-3 border-primary">
             <Card.Body>
               <Card.Title>Update Profile</Card.Title>
-              <Card.Text>Change your account details.</Card.Text>
-              <Link to="/me/edit" className="stretched-link">
-                Edit Profile
-              </Link>
+              <Link to="/me/edit" className="stretched-link"></Link>
             </Card.Body>
           </Card>
         </Col>

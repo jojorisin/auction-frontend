@@ -13,12 +13,20 @@ import Register from "./pages/Register";
 import MyPage from "./pages/MyPage";
 import MyBidsPage from "./pages/MyBidsPage";
 import MyWonAuctionsPage from "./pages/MyWonAuctionsPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
 import ProfileSettingsPage from "./pages/ProfileSettingsPage";
 import { logoutUser } from "./services/api";
 import "./App.css";
 
 const RootLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSub, setSelectedSub] = useState("");
+
+  const handleResetFilters = () => {
+    setSelectedCategory("");
+    setSelectedSub("");
+  };
 
   useEffect(() => {
     const checkAuth = () => {
@@ -63,8 +71,9 @@ const RootLayout = () => {
             to="/"
             className="mx-auto text-center"
             style={{ flex: 2 }}
+            onClick={handleResetFilters}
           >
-            <h1 className="mb-0 text-light">Bautasten Auktioner</h1>
+            <h1 className="h1-header mb-0 text-light">Bautasten Auktioner</h1>
           </Navbar.Brand>
 
           <div
@@ -108,7 +117,16 @@ const RootLayout = () => {
 
       <main>
         <Container>
-          <Outlet context={{ isLoggedIn }} />
+          <Outlet
+            context={{
+              isLoggedIn,
+              handleResetFilters,
+              selectedCategory,
+              setSelectedCategory,
+              selectedSub,
+              setSelectedSub,
+            }}
+          />
         </Container>
       </main>
     </div>
@@ -131,6 +149,7 @@ const router = createBrowserRouter([
       { path: "/me/bids", element: <MyBidsPage /> },
       { path: "/me/won", element: <MyWonAuctionsPage /> },
       { path: "/me/edit", element: <ProfileSettingsPage /> },
+      { path: "/me/orders/:id", element: <OrderDetailsPage /> },
     ],
   },
 ]);

@@ -1,3 +1,6 @@
 .my-won-title:hover {
-  color: rgb(142, 142, 142) !important;
+  color: var(--color-dark-wood);
+}
+.order-link:hover {
+  color: var(--color-dark-wood);
 }

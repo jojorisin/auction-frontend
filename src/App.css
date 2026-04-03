@@ -1,3 +1,7 @@
 .header-nav {
-  background-color: #10804f !important;
+  background-color: var(--color-cream) !important;
+}
+
+.h1-header {
+  color: var(--color-dark-wood) !important;
 }

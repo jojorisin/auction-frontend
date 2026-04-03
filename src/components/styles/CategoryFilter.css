@@ -3,5 +3,60 @@
   font-size: 0.8rem;
 }
 .category-link:hover {
-  color: rgb(142, 142, 142) !important;
+  color: var(--color-dark-wood) !important;
+}
+
+.cat-nav {
+  background-color: var(--color-turquoise);
+}
+.category-pill {
+  white-space: nowrap !important;
+
+  padding: 5px 15px !important;
+  font-size: 0.85rem !important;
+
+  margin-right: 8px;
+  margin-bottom: 10px;
+
+  background-color: #f0f0f0;
+  color: var(--color-dark-wood);
+  border: none !important;
+  flex-shrink: 0 !important;
+  box-shadow: 1px 1px 1px rgba(38, 60, 72, 0.1);
+}
+
+.category-pill.active {
+  background-color: var(--color-brown) !important;
+  color: #fff;
+  border-color: var(--color-dark-wood);
+}
+
+.category-pill:hover {
+  background-color: var(--color-brown) !important;
+  color: #fff;
+  border-color: var(--color-dark-wood);
+  cursor: pointer;
+}
+
+.scroll-arrow {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+}
+.scroll-arrow:hover {
+  color: var(--color-dark-wood) !important;
+  cursor: pointer;
+}
+/* hide scrollbar for different browsers */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.nav.hide-scrollbar {
+  overflow: -moz-scrollbars-none;
 }

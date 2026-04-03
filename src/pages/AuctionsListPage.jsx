@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { Card, Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 import {
   getActiveAuctions,
@@ -10,13 +10,12 @@ import CategoryFilter from "../components/CategoryFilter";
 import AuctionCard from "../components/AuctionCard";
 
 const AuctionsListPage = () => {
+  const { selectedCategory, setSelectedCategory, selectedSub, setSelectedSub } =
+    useOutletContext();
   const navigate = useNavigate();
   const [auctions, setAuctions] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategoryMap, setSubCategoryMap] = useState({});
-
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedSub, setSelectedSub] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -66,7 +65,7 @@ const AuctionsListPage = () => {
   return (
     <Container className="mt-4">
       <Row>
-        <Col xs={12} className="border-end">
+        <Col xs={12}>
           <CategoryFilter
             categories={categories}
             subCategoryMap={subCategoryMap}
@@ -76,8 +75,8 @@ const AuctionsListPage = () => {
             onSubChange={setSelectedSub}
           />
         </Col>
-        <Col md={9} lg={10} className="ps-4 bg-light p-3">
-          <h2 className="mb-4">
+        <Col xs={12} className="ps-4 bg-light p-3">
+          <h2 className="mb-4 fs-6">
             {selectedCategory
               ? `${selectedCategory} ${selectedSub && `> ${selectedSub}`}`
               : ""}
@@ -93,7 +92,7 @@ const AuctionsListPage = () => {
             <Row className="g-4">
               {auctions.length > 0 ? (
                 auctions.map((auction) => (
-                  <Col key={auction.auctionId} sm={6} lg={4} xl={3}>
+                  <Col key={auction.auctionId} xs={6} sm={6} lg={4} xl={3}>
                     <AuctionCard
                       auction={auction}
                       onClick={() => navigate(`/auctions/${auction.auctionId}`)}
@@ -102,7 +101,7 @@ const AuctionsListPage = () => {
                 ))
               ) : (
                 <Col key="no-results">
-                  <p>Inga auktioner hittades i denna kategori.</p>
+                  <p>No auctions in this category.</p>
                 </Col>
               )}
             </Row>

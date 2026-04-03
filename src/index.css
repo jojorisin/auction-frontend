@@ -15,21 +15,41 @@
 @font-face {
   font-family: "PPEditorial";
   src: url("./assets/fonts/PPEditorialNew-Ultrabold.otf") format("opentype");
-  font-weight: 800; /* Ultrabold */
+  font-weight: 800;
 }
 
-/* Nu kan du använda det så här: */
 h1,
 h2 {
   font-family: "PPEditorial", serif;
-  font-weight: 400; /* Webbläsaren väljer automatiskt Ultrabold-filen */
+  font-weight: 400;
 }
 
 p {
   font-family: "Inter", sans-serif;
-  font-weight: 400; /* Webbläsaren väljer Regular-filen */
+  font-weight: 400;
 }
 body {
   font-family: "Inter", sans-serif;
-  font-weight: 400; /* Webbläsaren väljer Regular-filen */
+  font-weight: 400;
+  background-color: var(--color-cream);
+}
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+:root {
+  --color-turquoise: #8aa1b1;
+  --color-orange: #c27e5d;
+  --color-green: #4d6d53;
+  --color-beige: #d9c8b5;
+  --color-brown: #937356;
+  --color-bg-gray: #e2e5e6;
+  --color-dark-wood: #5e4b3c;
+  --color-cream: #f2efe9;
+  --color-vintage-paper: #b89d7e;
+  --color-dusty-blue: #6a7e8b;
+  --color-light-clay: #d9a084;
+  --color-turquoise-ultra-light: #f1f5f7;
+  --color-dusty-blue-ultra-light: #eff2f4;
 }
