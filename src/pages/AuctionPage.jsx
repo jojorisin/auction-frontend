@@ -82,7 +82,7 @@ const AuctionPage = () => {
     <Container>
       <Row>
         <Col xs={12}>
-          <h1 className="mb-5">
+          <h1 className="mb-3">
             {auction.auctionId}, {auction.itemResponse.title}
           </h1>
         </Col>
@@ -100,7 +100,7 @@ const AuctionPage = () => {
                 className="img-fluid"
                 style={{
                   objectFit: "cover",
-                  width: "100%",
+                  maxwidth: "100%",
                   height: "600px",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 }}
