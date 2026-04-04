@@ -90,7 +90,7 @@ const AuctionsListPage = () => {
   return (
     <Container className="mt-4">
       <Row className="justify-content-center pb-3">
-        <Col xs={6}>
+        <Col xs={12} md={6}>
           <SearchBar
             searchTerm={searchTerm}
             handleSearchChange={handleSearchChange}
