@@ -21,7 +21,7 @@ const CategoryFilter = ({
     onSubChange("");
   };
   return (
-    <Container fluid className="category-container p-0 mb-4">
+    <Container fluid className="category-container p-0 mb-1">
       <Row>
         <Col className="mb-3">
           <div className="position-relative d-flex align-items-center">
@@ -71,7 +71,7 @@ const CategoryFilter = ({
                 <Nav.Link
                   active={selectedSub === ""}
                   onClick={() => onSubChange("")}
-                  className="category-pill rounded-pill"
+                  className="sub-link"
                 >
                   All {formatSnakeCase(selectedCategory)}
                 </Nav.Link>
@@ -81,7 +81,7 @@ const CategoryFilter = ({
                     key={sub}
                     active={selectedSub === sub}
                     onClick={() => onSubChange(sub)}
-                    className="category-pill rounded-pill"
+                    className="sub-link"
                   >
                     {formatSnakeCase(sub)}
                   </Nav.Link>

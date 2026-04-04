@@ -10,6 +10,7 @@ import CategoryFilter from "../components/CategoryFilter";
 import SearchBar from "../components/SearchBar";
 import AuctionCard from "../components/AuctionCard";
 import { formatSnakeCase } from "../utils/formatters";
+import "./AuctionsListPage.css";
 
 const AuctionsListPage = () => {
   const {
@@ -88,7 +89,7 @@ const AuctionsListPage = () => {
   };
 
   return (
-    <Container className="mt-4">
+    <Container className="mt-4 auctions-list-container">
       <Row className="justify-content-center pb-3">
         <Col xs={12} md={6}>
           <SearchBar
@@ -110,7 +111,7 @@ const AuctionsListPage = () => {
             onSubChange={setSelectedSub}
           />
         </Col>
-        <Col xs={12} className="ps-4 bg-light p-3">
+        <Col xs={12} className="ps-4 bg-white p-3">
           <h2 className="mb-4 fs-6">
             {searchStatus === "SOLD" && (
               <span>{formatSnakeCase(searchStatus)}</span>

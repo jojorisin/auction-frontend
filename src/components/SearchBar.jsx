@@ -40,7 +40,7 @@ const SearchBar = ({
           id="dropdown-status"
           className="border-0 rounded-end px-3 text-small text-secondary"
         >
-          Status
+          status
         </Dropdown.Toggle>
         <Dropdown.Menu align="end" popperConfig={{ strategy: "fixed" }}>
           <Dropdown.Item onClick={() => handleStatusChange("ACTIVE")}>
