@@ -40,6 +40,15 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
       setBidAmount("");
       setShowMaxBid(false);
     } catch (err) {
+      if (err.response?.status === 401) {
+        setError(
+          err.response?.data?.message || (
+            <link>"You need to be logged in to place a bid!."</link>
+          ),
+        );
+
+        window.location.href = "/auth/login";
+      }
       setError(err.response?.data?.message || "Error placing bid.");
     } finally {
       setLoading(false);

@@ -36,16 +36,7 @@ API.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest._retry) {
-      const publicUrls = [
-        "/auctions",
-        "/auctions/categories",
-        "/auctions/subcategories",
-      ];
-      const isPublic = publicUrls.some((ep) =>
-        originalRequest.url.includes(ep),
-      );
-      if (isPublic) {
-        localStorage.removeItem("token");
+      if (!localStorage.getItem("token")) {
         return Promise.reject(error);
       }
 
