@@ -35,8 +35,20 @@ API.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
     if (error.response?.status === 401 && !originalRequest._retry) {
+      const publicUrls = [
+        "/auctions",
+        "/auctions/categories",
+        "/auctions/subcategories",
+      ];
+      const isPublic = publicUrls.some((ep) =>
+        originalRequest.url.includes(ep),
+      );
+      if (isPublic) {
+        localStorage.removeItem("token");
+        return Promise.reject(error);
+      }
+
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -60,10 +72,8 @@ API.interceptors.response.use(
           { withCredentials: true },
         );
         const newToken = refreshResponse.data.accessToken;
-
         localStorage.setItem("token", newToken);
         processQueue(null, newToken);
-
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return API(originalRequest);
       } catch (refreshError) {
@@ -75,7 +85,6 @@ API.interceptors.response.use(
         isRefreshing = false;
       }
     }
-
     return Promise.reject(error);
   },
 );
