@@ -22,10 +22,14 @@ const RootLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSub, setSelectedSub] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchStatus, setSearchStatus] = useState("");
 
   const handleResetFilters = () => {
     setSelectedCategory("");
     setSelectedSub("");
+    setSearchTerm("");
+    setSearchStatus("ACTIVE");
   };
 
   useEffect(() => {
@@ -125,6 +129,10 @@ const RootLayout = () => {
               setSelectedCategory,
               selectedSub,
               setSelectedSub,
+              searchTerm,
+              setSearchTerm,
+              searchStatus,
+              setSearchStatus,
             }}
           />
         </Container>

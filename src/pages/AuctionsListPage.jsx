@@ -7,11 +7,21 @@ import {
   getSubCategories,
 } from "../services/api";
 import CategoryFilter from "../components/CategoryFilter";
+import SearchBar from "../components/SearchBar";
 import AuctionCard from "../components/AuctionCard";
+import { formatSnakeCase } from "../utils/formatters";
 
 const AuctionsListPage = () => {
-  const { selectedCategory, setSelectedCategory, selectedSub, setSelectedSub } =
-    useOutletContext();
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    selectedSub,
+    setSelectedSub,
+    searchTerm,
+    setSearchTerm,
+    searchStatus,
+    setSearchStatus,
+  } = useOutletContext();
   const navigate = useNavigate();
   const [auctions, setAuctions] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -43,6 +53,8 @@ const AuctionsListPage = () => {
       setLoading(true);
       try {
         const params = {};
+        if (searchStatus) params.status = searchStatus;
+        if (searchTerm) params.q = searchTerm;
         if (selectedCategory) params.category = selectedCategory;
         if (selectedSub) params.subCategory = selectedSub;
 
@@ -55,15 +67,38 @@ const AuctionsListPage = () => {
       }
     };
     fetchAuctions();
-  }, [selectedCategory, selectedSub]);
+  }, [selectedCategory, selectedSub, searchTerm, searchStatus]);
 
   const handleCategoryChange = (cat) => {
+    setSearchTerm("");
     setSelectedCategory(cat);
     setSelectedSub("");
+    setSearchStatus("ACTIVE");
+  };
+
+  const handleSearchChange = (query) => {
+    setSelectedCategory("");
+    setSelectedSub("");
+    setSearchTerm(query);
+    setSearchStatus("ACTIVE");
+  };
+
+  const handleStatusChange = (status) => {
+    setSearchStatus(status);
   };
 
   return (
     <Container className="mt-4">
+      <Row className="justify-content-center pb-3">
+        <Col xs={6}>
+          <SearchBar
+            searchTerm={searchTerm}
+            handleSearchChange={handleSearchChange}
+            searchStatus={searchStatus}
+            handleStatusChange={handleStatusChange}
+          />
+        </Col>
+      </Row>
       <Row>
         <Col xs={12}>
           <CategoryFilter
@@ -77,9 +112,18 @@ const AuctionsListPage = () => {
         </Col>
         <Col xs={12} className="ps-4 bg-light p-3">
           <h2 className="mb-4 fs-6">
-            {selectedCategory
-              ? `${selectedCategory} ${selectedSub && `> ${selectedSub}`}`
-              : ""}
+            {searchStatus === "SOLD" && (
+              <span>{formatSnakeCase(searchStatus)}</span>
+            )}
+            {searchStatus === "SOLD" && selectedCategory && " > "}
+            {selectedCategory ? (
+              <>
+                {formatSnakeCase(selectedCategory)}
+                {selectedSub && ` > ${formatSnakeCase(selectedSub)}`}
+              </>
+            ) : (
+              !searchStatus && "Alla auktioner"
+            )}
           </h2>
 
           {loading ? (
