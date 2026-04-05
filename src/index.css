@@ -33,6 +33,9 @@ body {
   font-weight: 400;
   background-color: var(--color-cream);
 }
+main {
+  background-color: white;
+}
 a {
   text-decoration: none !important;
   color: inherit;

@@ -1,5 +1,6 @@
 import { FormControl, InputGroup, Dropdown } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
+import { formatSnakeCase } from "../utils/formatters";
 
 const SearchBar = ({
   searchTerm,
@@ -28,7 +29,7 @@ const SearchBar = ({
           id="dropdown-status"
           className="border-0 rounded-end px-3 text-small text-secondary"
         >
-          status
+          {formatSnakeCase(searchStatus)}
         </Dropdown.Toggle>
         <Dropdown.Menu align="end" popperConfig={{ strategy: "fixed" }}>
           <Dropdown.Item onClick={() => handleStatusChange("ACTIVE")}>

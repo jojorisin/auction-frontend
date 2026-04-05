@@ -71,7 +71,7 @@ const CategoryFilter = ({
                 <Nav.Link
                   active={selectedSub === ""}
                   onClick={() => onSubChange("")}
-                  className="sub-link"
+                  className="sub-link text-nowrap"
                 >
                   All {formatSnakeCase(selectedCategory)}
                 </Nav.Link>
@@ -81,7 +81,7 @@ const CategoryFilter = ({
                     key={sub}
                     active={selectedSub === sub}
                     onClick={() => onSubChange(sub)}
-                    className="sub-link"
+                    className="sub-link text-nowrap"
                   >
                     {formatSnakeCase(sub)}
                   </Nav.Link>
