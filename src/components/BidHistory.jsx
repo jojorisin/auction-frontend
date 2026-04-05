@@ -4,10 +4,9 @@ import BidForm from "./BidForm";
 import { getBidHistory } from "../services/api";
 import { Client } from "@stomp/stompjs";
 import DateTimeFormatter from "./DateTimeFormatter";
-import "./BiddingSection.css";
+import "./BidHistory.css";
 
-const BiddingSection = ({ auction }) => {
-  if (!auction) return <Spinner animation="border" />;
+const BidHistory = ({ auction }) => {
   const [loading, setLoading] = useState(true);
   const [bids, setBids] = useState([]);
 
@@ -55,8 +54,6 @@ const BiddingSection = ({ auction }) => {
     const client = new Client({
       brokerURL: import.meta.env.VITE_WEBSOCKET_URL,
 
-      debug: (str) => console.log("STOMP Log: ", str),
-
       onConnect: () => {
         console.log("Connected to WebSocket");
         client.subscribe(`/topic/bids/${auction.auctionId}`, (message) => {
@@ -80,32 +77,7 @@ const BiddingSection = ({ auction }) => {
     };
   }, [auction?.auctionId]);
 
-  /*useEffect(() => {
-    fetchBidHistory();
-
-    const client = new Client({
-      brokerURL:
-        import.meta.env.VITE_API_BASE_URL.replace("https://", "wss://")
-          .replace("http://", "ws://") // Gör att det fortfarande funkar lokalt
-          .replace("/api", "") + "/ws",
-      // brokerURL: "ws://localhost:8080/ws",
-
-      onConnect: () => {
-        console.log("Connected to WebSocket");
-        client.subscribe(`/topic/bids/${auction.auctionId}`, (message) => {
-          const updatedBids = JSON.parse(message.body);
-          setBids(updatedBids);
-        });
-      },
-      debug: (str) => console.log(str),
-    });
-
-    client.activate();
-
-    return () => {
-      client.deactivate();
-    };
-  }, [auction.auctionId]);*/
+  if (!auction) return <Spinner animation="border" />;
 
   return (
     <Container className="mt-4">
@@ -167,4 +139,4 @@ const BiddingSection = ({ auction }) => {
   );
 };
 
-export default BiddingSection;
+export default BidHistory;

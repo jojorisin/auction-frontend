@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getAuctionById } from "../services/api";
-import BiddingSection from "../components/BiddingSection";
+import BidHistory from "../components/BidHistory";
 
 const AuctionPage = () => {
   const { id } = useParams();
@@ -169,7 +169,7 @@ const AuctionPage = () => {
           </div>
         </Col>
         <Col xs={12} md={5} className="bg-light">
-          <BiddingSection auction={auction} />
+          <BidHistory auction={auction} />
         </Col>
       </Row>
     </Container>
