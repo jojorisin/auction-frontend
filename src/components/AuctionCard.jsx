@@ -24,7 +24,7 @@ const AuctionCard = ({ auction, onClick }) => {
         variant="top"
         src={images[currentImgIndex]}
         style={{
-          height: "150px",
+          height: "200px",
           objectFit: "cover",
           objectPosition: "0% 70%",
           transition: "opacity 0.3s",

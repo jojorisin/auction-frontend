@@ -101,7 +101,7 @@ const AuctionPage = () => {
                 style={{
                   objectFit: "cover",
                   width: "100%",
-                  maxHeight: "70vh",
+                  maxHeight: "130vh",
                   objectPosition: "bottom",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 }}
