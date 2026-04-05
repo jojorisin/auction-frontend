@@ -1,16 +1,4 @@
-import {
-  Card,
-  Container,
-  Row,
-  Col,
-  Spinner,
-  Alert,
-  Form,
-  FormControl,
-  InputGroup,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { FormControl, InputGroup, Dropdown } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 
 const SearchBar = ({

@@ -1,23 +1,16 @@
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  InputGroup,
-  Button,
-  Alert,
-} from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { placeBid } from "../services/api";
 import BidResponse from "./BidResponse";
 import MyMaxBid from "./MyMaxBid";
+import "../Index.css";
 
 const BidForm = ({ auctionId, currentHighestBid, increment }) => {
   const [bidAmount, setBidAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [bidResponse, setBidResponse] = useState(null);
-  const [showMaxBid, setShowMaxBid] = useState(true);
+  const [showMaxBid, setShowMaxBid] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,16 +33,31 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
       setBidAmount("");
       setShowMaxBid(false);
     } catch (err) {
-      if (err.response?.status === 401) {
+      const status = err.response?.status;
+      const errName = err.response?.data?.error;
+      if (status === 401) {
         setError(
-          err.response?.data?.message || (
-            <link>"You need to be logged in to place a bid!."</link>
-          ),
+          <span className="small">
+            <Alert.Link className="red-error-link" href="/auth/login">
+              Login
+            </Alert.Link>{" "}
+            or{" "}
+            <Alert.Link className="red-error-link" href="/auth/register">
+              Register
+            </Alert.Link>{" "}
+            to place bid.
+          </span>,
         );
-
-        window.location.href = "/auth/login";
+        return;
+      } else if (status === 400) {
+        setError(err.response?.data?.message || "error");
+        // if bid is lower than users current max bid-show max bid and alert
+        if (errName === "DomainArgumentException") {
+          setShowMaxBid(true);
+        }
+      } else {
+        setError(err.response?.data?.message || "Error placing bid.");
       }
-      setError(err.response?.data?.message || "Error placing bid.");
     } finally {
       setLoading(false);
     }
@@ -79,6 +87,7 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
         >
           {loading ? "Sending..." : "Place bid"}
         </Button>
+
         {showMaxBid && <MyMaxBid auctionId={auctionId} />}
       </Form.Group>
       {bidResponse && <BidResponse bidResponse={bidResponse} />}
