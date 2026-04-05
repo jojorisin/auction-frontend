@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Card } from "react-bootstrap";
+import "./styles/AuctionCard.css";
 
 const AuctionCard = ({ auction, onClick }) => {
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
@@ -13,7 +14,7 @@ const AuctionCard = ({ auction, onClick }) => {
 
   return (
     <Card
-      className="w-100 shadow-sm border-0"
+      className="w-100 shadow-sm border-0 auction-card"
       onClick={onClick}
       onMouseEnter={() => hasMultiple && setCurrentImgIndex(1)}
       onMouseLeave={() => setCurrentImgIndex(0)}
@@ -23,8 +24,9 @@ const AuctionCard = ({ auction, onClick }) => {
         variant="top"
         src={images[currentImgIndex]}
         style={{
-          height: "200px",
+          height: "150px",
           objectFit: "cover",
+          objectPosition: "0% 70%",
           transition: "opacity 0.3s",
         }}
       />

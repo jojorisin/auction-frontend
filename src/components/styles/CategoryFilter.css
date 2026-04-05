@@ -66,6 +66,10 @@
   font-size: 0.9rem;
   padding-right: 3px;
 }
+
+.sub-link.active {
+  font-weight: bold;
+}
 .sub-link:hover {
   color: var(--color-brown) !important;
 }

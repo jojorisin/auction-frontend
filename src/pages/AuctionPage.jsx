@@ -79,16 +79,16 @@ const AuctionPage = () => {
     );
 
   return (
-    <Container>
+    <Container className="bg-white">
       <Row>
         <Col xs={12}>
-          <h1 className="mb-3">
+          <h1 className=" mt-3 mb-2 fs-4">
             {auction.auctionId}, {auction.itemResponse.title}
           </h1>
         </Col>
         <Col xs={12} md={7} className="p-0 mx-auto" style={{ maxWidth: "90%" }}>
           <div>
-            <div className="position-relative">
+            <div className="position-relative ">
               <img
                 src={
                   auction.itemResponse.imageUrls &&
@@ -100,8 +100,9 @@ const AuctionPage = () => {
                 className="img-fluid"
                 style={{
                   objectFit: "cover",
-                  maxwidth: "100%",
-                  height: "600px",
+                  width: "100%",
+                  maxHeight: "70vh",
+                  objectPosition: "bottom",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                 }}
               />
@@ -145,7 +146,7 @@ const AuctionPage = () => {
                         key={index}
                         src={url}
                         alt={`Thumbnail ${index + 1}`}
-                        className={`img-thumbnail me-2 mb-2 ${index === currentImageIndex ? "border-primary" : ""}`}
+                        className="img-thumbnail me-2 mb-2"
                         style={{
                           width: "80px",
                           height: "80px",
@@ -153,7 +154,7 @@ const AuctionPage = () => {
                           cursor: "pointer",
                           border:
                             index === currentImageIndex
-                              ? "3px solid #007bff"
+                              ? "3px solid #818181 "
                               : "2px solid #dee2e6",
                           borderRadius: "4px",
                         }}
@@ -164,8 +165,8 @@ const AuctionPage = () => {
                 </>
               )}
             </div>
-            <p className="mt-3">Description: </p>
-            <p>{auction.itemResponse.description}</p>
+            <p className="mt-3 mb-0 fw-bold">Description: </p>
+            <p className="text-muted">{auction.itemResponse.description}</p>
           </div>
         </Col>
         <Col xs={12} md={5} className="bg-light">
