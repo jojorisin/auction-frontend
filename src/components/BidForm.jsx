@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { placeBid } from "../services/api";
 import BidResponse from "./BidResponse";
 import MyMaxBid from "./MyMaxBid";
-import "../Index.css";
+import "../index.css";
 
 const BidForm = ({ auctionId, currentHighestBid, increment }) => {
   const [bidAmount, setBidAmount] = useState("");
