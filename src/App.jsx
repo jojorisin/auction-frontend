@@ -27,6 +27,7 @@ import ProfileSettingsPage from "./pages/ProfileSettingsPage";
 import { logoutUser } from "./services/api";
 import "./App.css";
 import Header from "./components/Header";
+import SuccessPage from "./pages/SuccessPage";
 
 const RootLayout = () => {
   const navigate = useNavigate();
@@ -117,11 +118,14 @@ const router = createBrowserRouter([
       { path: "auctions/:id", element: <AuctionPage /> },
       { path: "auth/login", element: <Login /> },
       { path: "auth/register", element: <Register /> },
-      { path: "/me", element: <MyPage /> },
-      { path: "/me/bids", element: <MyBidsPage /> },
-      { path: "/me/won", element: <MyWonAuctionsPage /> },
-      { path: "/me/edit", element: <ProfileSettingsPage /> },
-      { path: "/me/orders/:id", element: <OrderDetailsPage /> },
+      { path: "me", element: <MyPage /> },
+      { path: "me/bids", element: <MyBidsPage /> },
+      { path: "me/won", element: <MyWonAuctionsPage /> },
+      { path: "me/edit", element: <ProfileSettingsPage /> },
+      { path: "me/orders/:id", element: <OrderDetailsPage /> },
+      { path: "success", element: <SuccessPage /> },
+      { path: "success/", element: <SuccessPage /> },
+      { path: "cancel", element: <MyWonAuctionsPage /> },
     ],
   },
 ]);
