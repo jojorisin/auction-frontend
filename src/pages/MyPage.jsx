@@ -44,13 +44,13 @@ const MyPage = () => {
   }
 
   return (
-    <Container className="my-container bg-white">
-      <Row className="mt-5 p-5">
+    <Container className="my-container bg-white py-5">
+      <Row className="gy-3">
         <Col xs={12}>
-          <h1 className="fs-5 pb-4">Hello, {user?.email}</h1>
+          <h1 className="fs-5 mb-2">Hello, {user?.email}</h1>
         </Col>
-        <Col md={4} sm={6}>
-          <Card className="my-pages-card h-100 shadow-sm hover-shadow text-center p-3">
+        <Col xs={12} md={4} sm={6}>
+          <Card className="my-pages-card text-center">
             <Card.Body>
               <Card.Title>My Bids</Card.Title>
               <Link to="/me/bids" className="stretched-link"></Link>
@@ -58,8 +58,8 @@ const MyPage = () => {
           </Card>
         </Col>
 
-        <Col md={4} sm={6}>
-          <Card className="my-pages-card h-100 shadow-sm text-center p-3">
+        <Col xs={12} md={4} sm={6}>
+          <Card className="my-pages-card text-center">
             <Card.Body>
               <Card.Title>Won Auctions</Card.Title>
               <Link to="/me/won" className="stretched-link"></Link>
@@ -67,8 +67,8 @@ const MyPage = () => {
           </Card>
         </Col>
 
-        <Col md={4} sm={12}>
-          <Card className="my-pages-card h-100 shadow-sm text-center p-3 border-primary">
+        <Col xs={12} md={4} sm={12}>
+          <Card className="my-pages-card text-center ">
             <Card.Body>
               <Card.Title>Update Profile</Card.Title>
               <Link to="/me/edit" className="stretched-link"></Link>
