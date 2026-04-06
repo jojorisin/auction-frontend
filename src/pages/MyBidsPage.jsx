@@ -5,7 +5,6 @@ import { Container, Alert, Row, Col, Table, Card } from "react-bootstrap";
 import DateTimeFormatter from "../components/DateTimeFormatter";
 import { useNavigate } from "react-router-dom";
 import "./MyBidsPage.css";
-import MyPagesNav from "../components/MyPagesNav";
 
 const MyBidsPage = () => {
   const navigate = useNavigate();
@@ -56,7 +55,6 @@ const MyBidsPage = () => {
 
   return (
     <Container className="table-responsive">
-    
       <Table striped borderless className="justify-content-center align-middle">
         <thead>
           <tr>

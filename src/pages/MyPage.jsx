@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Container, Col, Row, Alert, Card } from "react-bootstrap";
 import LoadingSpinner from "../components/LoadingSpinner";
 import "./MyPage.css";
-import MyPagesNav from "../components/MyPagesNav";
 
 const MyPage = () => {
   const [loading, setLoading] = useState(true);
