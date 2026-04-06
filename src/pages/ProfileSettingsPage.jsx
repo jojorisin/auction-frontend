@@ -104,23 +104,6 @@ const ProfileSettingsPage = () => {
   return (
     <Container className="py-4">
       <Row>
-        <Col xs={12} md={2}>
-          <h4 className="mb-3">Account</h4>
-          <ListGroup variant="flush" className="shadow-sm rounded">
-            <ListGroup.Item action as={NavLink} to="/me" end>
-              My Profile
-            </ListGroup.Item>
-            <ListGroup.Item action as={NavLink} to="/me/bids">
-              My Bids
-            </ListGroup.Item>
-            <ListGroup.Item action as={NavLink} to="/me/won">
-              Won Auctions
-            </ListGroup.Item>
-            <ListGroup.Item action as={NavLink} to="/me/edit">
-              Settings & Privacy
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
         <Col md={5}>
           {success && (
             <Alert

@@ -1,0 +1,18 @@
+.header-nav {
+  background-color: var(--color-cream) !important;
+}
+
+.h1-header {
+  color: var(--color-dark-wood) !important;
+}
+
+.my-pages-dropdown {
+  color: var(--color-dark-wood);
+}
+.my-pages-dropdown:hover {
+  color: var(--color-brown);
+}
+.my-pages-link:hover {
+  color: var(--color-brown) !important;
+  background-color: white;
+}

@@ -5,6 +5,7 @@ import { Container, Alert, Row, Col, Table, Card } from "react-bootstrap";
 import DateTimeFormatter from "../components/DateTimeFormatter";
 import { useNavigate } from "react-router-dom";
 import "./MyBidsPage.css";
+import MyPagesNav from "../components/MyPagesNav";
 
 const MyBidsPage = () => {
   const navigate = useNavigate();
@@ -54,7 +55,8 @@ const MyBidsPage = () => {
   }
 
   return (
-    <Container>
+    <Container className="table-responsive">
+    
       <Table striped borderless className="justify-content-center align-middle">
         <thead>
           <tr>
@@ -75,8 +77,8 @@ const MyBidsPage = () => {
                   alt={bid.title}
                   onClick={() => navigate(`/auctions/${bid.auctionId}`)}
                   style={{
-                    width: "200px",
-                    height: "200px",
+                    width: "100px",
+                    height: "100px",
                     objectFit: "cover",
                     cursor: "pointer",
                   }}
@@ -101,7 +103,7 @@ const MyBidsPage = () => {
               >
                 {bid.highestBid} SEK
               </td>
-              <td>{bid.maxSum} SEK</td>
+              <td>{bid.maxSum ? `${bid.maxSum} SEK` : "-"}</td>
             </tr>
           ))}
         </tbody>

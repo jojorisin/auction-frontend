@@ -3,9 +3,18 @@ import {
   RouterProvider,
   Outlet,
   Link,
+  useNavigate,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button, Nav, Navbar, Container, Row, Col } from "react-bootstrap";
+import {
+  Button,
+  Nav,
+  Navbar,
+  Container,
+  Row,
+  Col,
+  NavDropdown,
+} from "react-bootstrap";
 import AuctionsListPage from "./pages/AuctionsListPage";
 import AuctionPage from "./pages/AuctionPage";
 import Login from "./pages/Login";
@@ -17,8 +26,10 @@ import OrderDetailsPage from "./pages/OrderDetailsPage";
 import ProfileSettingsPage from "./pages/ProfileSettingsPage";
 import { logoutUser } from "./services/api";
 import "./App.css";
+import Header from "./components/Header";
 
 const RootLayout = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSub, setSelectedSub] = useState("");
@@ -61,83 +72,36 @@ const RootLayout = () => {
       localStorage.removeItem("token");
       setIsLoggedIn(false);
       window.dispatchEvent(new Event("authChange"));
+      navigate("/");
     }
   };
 
   return (
-    <div>
-      <Navbar expand="lg" className="header-nav mb-4">
-        <Container className="d-flex justify-content-between align-items-center">
-          <div className="d-none d-lg-block" style={{ flex: 1 }}></div>
-
-          <Navbar.Brand
-            as={Link}
-            to="/"
-            className="mx-auto text-center"
-            style={{ flex: 2 }}
-            onClick={handleResetFilters}
-          >
-            <h1 className="h1-header mb-0 text-light">Bautasten Auktioner</h1>
-          </Navbar.Brand>
-
-          <div
-            className="d-flex justify-content-end align-items-center"
-            style={{ flex: 1 }}
-          >
-            <Navbar.Toggle
-              aria-controls="basic-navbar-nav"
-              className="ms-auto"
-            />
-
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ms-auto align-items-center">
-                {isLoggedIn ? (
-                  <>
-                    <Nav.Link as={Link} to="/me" className="me-2">
-                      My Pages
-                    </Nav.Link>
-                    <Button
-                      variant="outline-dark"
-                      size="sm"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </Button>
-                  </>
-                ) : (
-                  <Nav.Link
-                    as={Link}
-                    to="/auth/login"
-                    className="btn btn-outline-dark px-4"
-                  >
-                    Login
-                  </Nav.Link>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </div>
-        </Container>
-      </Navbar>
+    <>
+      <Header
+        isLoggedIn={isLoggedIn}
+        handleResetFilters={handleResetFilters}
+        handleLogout={handleLogout}
+      />
 
       <main>
-        <Container>
-          <Outlet
-            context={{
-              isLoggedIn,
-              handleResetFilters,
-              selectedCategory,
-              setSelectedCategory,
-              selectedSub,
-              setSelectedSub,
-              searchTerm,
-              setSearchTerm,
-              searchStatus,
-              setSearchStatus,
-            }}
-          />
-        </Container>
+        <Outlet
+          context={{
+            isLoggedIn,
+            handleLogout,
+            handleResetFilters,
+            selectedCategory,
+            setSelectedCategory,
+            selectedSub,
+            setSelectedSub,
+            searchTerm,
+            setSearchTerm,
+            searchStatus,
+            setSearchStatus,
+          }}
+        />
       </main>
-    </div>
+    </>
   );
 };
 

@@ -31,7 +31,7 @@ p {
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  background-color: var(--color-cream);
+  background-color: white;
 }
 main {
   background-color: white;

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import DateTimeFormatter from "../components/DateTimeFormatter";
 import { useNavigate, Link } from "react-router-dom";
 import "./MyWonAuctionsPage.css";
+import MyPagesNav from "../components/MyPagesNav";
 
 const MyWonAuctionsPage = () => {
   const navigate = useNavigate();
@@ -53,7 +54,8 @@ const MyWonAuctionsPage = () => {
   }
 
   return (
-    <Container className="p-5">
+    <Container className="py-1 table-responsive">
+     
       <Table
         striped
         borderless
@@ -82,8 +84,8 @@ const MyWonAuctionsPage = () => {
                   alt={auction.title}
                   onClick={() => navigate(`/auctions/${auction.auctionId}`)}
                   style={{
-                    width: "150px",
-                    height: "150px",
+                    width: "100px",
+                    height: "100px",
                     objectFit: "cover",
                     cursor: "pointer",
                   }}
@@ -104,7 +106,7 @@ const MyWonAuctionsPage = () => {
                   {auction.status}
                 </Link>
               </td>
-              <td>{auction.highestBid} SEK</td>
+              <td>{auction.winningBid} SEK</td>
             </tr>
           ))}
         </tbody>
