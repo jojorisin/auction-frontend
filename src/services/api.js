@@ -108,7 +108,7 @@ API.interceptors.response.use(
         // Om även förnyelsen misslyckas (sessionen är helt slut)
         processQueue(refreshError, null);
         localStorage.removeItem("token"); // Rensa den gamla trasiga koden
-        //window.location.href = "/auth/login"; // Tvinga användaren att logga in igen
+        window.dispatchEvent(new Event("authChange"));
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false; // Återställ flaggan
@@ -157,3 +157,7 @@ export const registerUser = (registerData) =>
 export const loginUser = (loginData) => API.post("/auth/login", loginData);
 export const refreshToken = () => API.post("/auth/refresh", {});
 export const logoutUser = () => API.post("/auth/logout");
+
+// payment
+export const createCheckoutSession = (orderId) =>
+  API.post(`/payments/checkout-session/${orderId}`);
