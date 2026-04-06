@@ -70,11 +70,6 @@ API.interceptors.response.use(
 
     // Om vi får 401 (Obehörig) och inte redan har försökt igen (_retry)
     if (error.response?.status === 401 && !originalRequest._retry) {
-      // Om vi inte ens har en token i localStorage finns inget att försöka förnya
-      if (!localStorage.getItem("token")) {
-        return Promise.reject(error);
-      }
-
       // Om en refresh redan pågår: lägg detta anrop i kön och vänta på svar
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -103,6 +98,7 @@ API.interceptors.response.use(
 
         const newToken = refreshResponse.data.accessToken; // Hämta den nya koden
         localStorage.setItem("token", newToken); // Spara den nya koden lokalt
+        window.dispatchEvent(new Event("authChange"));
         processQueue(null, newToken); // Säg till kön att det är fritt fram
 
         // Uppdatera det ursprungliga anropet med den NYA koden och skicka iväg det igen
@@ -155,11 +151,9 @@ export const updateContactInfo = (contactData) =>
 export const updatePassword = (passwordData) =>
   API.put("/me/password", passwordData);
 
-// AUTH ANROP: Registrering och inloggning sker publikt.
+// AUTH ANROP:
 export const registerUser = (registerData) =>
-  publicAPI.post("/auth/register", registerData);
-export const loginUser = (loginData) =>
-  publicAPI.post("/auth/login", loginData);
-export const refreshToken = () =>
-  publicAPI.post("/auth/refresh", {}, { withCredentials: true });
+  API.post("/auth/register", registerData);
+export const loginUser = (loginData) => API.post("/auth/login", loginData);
+export const refreshToken = () => API.post("/auth/refresh", {});
 export const logoutUser = () => API.post("/auth/logout");
