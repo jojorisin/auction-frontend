@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import DateTimeFormatter from "../components/DateTimeFormatter";
 import { useNavigate, Link } from "react-router-dom";
 import "./MyWonAuctionsPage.css";
-import MyPagesNav from "../components/MyPagesNav";
 
 const MyWonAuctionsPage = () => {
   const navigate = useNavigate();
@@ -55,7 +54,6 @@ const MyWonAuctionsPage = () => {
 
   return (
     <Container className="py-1 table-responsive">
-     
       <Table
         striped
         borderless
