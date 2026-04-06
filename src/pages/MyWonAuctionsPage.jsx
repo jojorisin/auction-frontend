@@ -100,7 +100,14 @@ const MyWonAuctionsPage = () => {
                 <DateTimeFormatter isoString={auction.endTime} />
               </td>
               <td className="order-link">
-                <Link to={`/me/orders/${auction.orderId}`}>
+                <Link
+                  className={
+                    auction?.status === "PAID"
+                      ? "text-success fw-bold"
+                      : "text-danger fw-bold"
+                  }
+                  to={`/me/orders/${auction.orderId}`}
+                >
                   {auction.status}
                 </Link>
               </td>
