@@ -27,7 +27,7 @@ const Login = () => {
 
   return (
     <Container>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-center p-3">
         <Col md={6}>
           <h2>Login</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -54,16 +54,21 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" disabled={loading}>
+            <Button
+              className="mt-3"
+              variant="dark"
+              type="submit"
+              disabled={loading}
+            >
               {loading ? "Logging in..." : "Login"}
             </Button>
           </Form>
 
           <div className="text-center mt-3">
             <p className="mb-0">
-              Har du inget konto?{" "}
+              Dont have an account?{" "}
               <Link to="/auth/register" className="text-decoration-none">
-                Registrera dig här
+                Register <strong>here</strong>
               </Link>
             </p>
           </div>

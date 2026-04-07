@@ -3,6 +3,8 @@ import { Container, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { getAuctionById } from "../services/api";
 import BidHistory from "../components/BidHistory";
+import LoadingSpinner from "../components/LoadingSpinner";
+import "./styles/AuctionPage.css";
 
 const AuctionPage = () => {
   const { id } = useParams();
@@ -60,7 +62,7 @@ const AuctionPage = () => {
   if (loading)
     return (
       <Container className="mt-5">
-        <Spinner animation="border" />
+        <LoadingSpinner />
       </Container>
     );
 
@@ -82,7 +84,7 @@ const AuctionPage = () => {
     <Container className="bg-white">
       <Row>
         <Col xs={12}>
-          <h1 className=" mt-3 mb-2 fs-4">
+          <h1 className="mt-3 mb-2 fs-4">
             {auction.auctionId}, {auction.itemResponse.title}
           </h1>
         </Col>
@@ -169,7 +171,7 @@ const AuctionPage = () => {
             <p className="text-muted">{auction.itemResponse.description}</p>
           </div>
         </Col>
-        <Col xs={12} md={5} className="bg-light">
+        <Col xs={12} md={5} className="bidhistory-col">
           <BidHistory auction={auction} />
         </Col>
       </Row>

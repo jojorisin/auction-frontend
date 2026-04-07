@@ -2,6 +2,7 @@ import { getMyOrderById, createCheckoutSession } from "../services/api";
 import { useEffect, useState } from "react";
 import { Container, Alert, Table, Row, Col, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
@@ -15,9 +16,16 @@ const OrderDetailsPage = () => {
     try {
       const session = await createCheckoutSession(orderId);
       window.location.href = session.data?.url;
-      setPaymentLoading(false);
     } catch (error) {
-      alert(`Unable to process payment. ${error.message}`);
+      if (error.response?.status === 502) {
+        let helptext =
+          " Tip: Mobile Brave sometimes blocks payments. Try turning off 'Shields' or use Chrome/Safari.";
+        alert(`Unable to process payment. ${error.message}.${helptext}}`);
+      } else {
+        alert(`Unable to process payment. ${error.message}.`);
+      }
+    } finally {
+      setPaymentLoading(false);
     }
   };
 
@@ -28,7 +36,7 @@ const OrderDetailsPage = () => {
         const response = await getMyOrderById(id);
         setOrder(response.data || response);
       } catch (err) {
-        setError("Kunde inte hämta ordern.");
+        setError("Unable to fetch orders.");
       } finally {
         setLoading(false);
       }
@@ -39,14 +47,16 @@ const OrderDetailsPage = () => {
   if (loading)
     return (
       <Container className="mt-5">
-        <p>Laddar...</p>
+        <LoadingSpinner />
       </Container>
     );
 
   if (error || !order)
     return (
       <Container className="mt-5">
-        <Alert variant="danger">{error || "Hittade ingen order"}</Alert>
+        <Alert variant="light">
+          {error || "Could not load order details. Try again later"}
+        </Alert>
       </Container>
     );
 

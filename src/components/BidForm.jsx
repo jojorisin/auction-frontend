@@ -5,12 +5,21 @@ import BidResponse from "./BidResponse";
 import MyMaxBid from "./MyMaxBid";
 import "../index.css";
 
-const BidForm = ({ auctionId, currentHighestBid, increment }) => {
+const BidForm = ({
+  auctionId,
+  currentHighestBid,
+  currentHighestBidder,
+  increment,
+  currentUserId,
+}) => {
   const [bidAmount, setBidAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [bidResponse, setBidResponse] = useState(null);
   const [showMaxBid, setShowMaxBid] = useState(false);
+  const iAmLeadingNow = currentUserId === currentHighestBidder;
+  const isResponseStillValid =
+    bidResponse?.status === "LEADING" ? iAmLeadingNow : true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +60,7 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
         return;
       } else if (status === 400) {
         setError(err.response?.data?.message || "error");
-        // if bid is lower than users current max bid-show max bid and alert
+        // if bid is lower than users current max bid - show max bid and alert
         if (errName === "DomainArgumentException") {
           setShowMaxBid(true);
         }
@@ -62,6 +71,14 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    if (bidResponse?.status === "LEADING") {
+      if (currentHighestBidder !== currentUserId) {
+        setBidResponse(null);
+        setError("Someone just outbid you! Update your bid.");
+      }
+    }
+  }, [currentHighestBidder, currentUserId]);
 
   return (
     <Form onSubmit={handleSubmit} className="mb-4">
@@ -90,7 +107,9 @@ const BidForm = ({ auctionId, currentHighestBid, increment }) => {
 
         {showMaxBid && <MyMaxBid auctionId={auctionId} />}
       </Form.Group>
-      {bidResponse && <BidResponse bidResponse={bidResponse} />}
+      {bidResponse && isResponseStillValid && (
+        <BidResponse bidResponse={bidResponse} />
+      )}
       {error && (
         <Alert variant="danger" className="mt-2">
           {error}

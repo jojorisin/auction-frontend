@@ -3,8 +3,7 @@ import { getMyBids } from "../services/api";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Container, Alert, Row, Col, Table, Card } from "react-bootstrap";
 import DateTimeFormatter from "../components/DateTimeFormatter";
-import { useNavigate } from "react-router-dom";
-import "./MyBidsPage.css";
+import { useNavigate, Link } from "react-router-dom";
 
 const MyBidsPage = () => {
   const navigate = useNavigate();
@@ -32,7 +31,11 @@ const MyBidsPage = () => {
   }, []);
 
   if (loading) {
-    return <LoadingSpinner />;
+    return (
+      <Container>
+        <LoadingSpinner />
+      </Container>
+    );
   }
   if (error) {
     return (
@@ -42,13 +45,15 @@ const MyBidsPage = () => {
     );
   }
 
-  if (!bids) {
-    return <Alert variant="warning">No bids available.</Alert>;
-  }
-  if (bids.length === 0) {
+  if (!bids || bids.length === 0) {
     return (
-      <Container className="mt-4">
-        <Alert variant="info">No bids available.</Alert>
+      <Container>
+        <h1 className="no-data-h1">
+          You have not placed any bids yet! Checkout out listings{" "}
+          <Link to="/">
+            <strong className="no-data-link">here.</strong>
+          </Link>
+        </h1>
       </Container>
     );
   }

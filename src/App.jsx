@@ -124,7 +124,6 @@ const router = createBrowserRouter([
       { path: "me/edit", element: <ProfileSettingsPage /> },
       { path: "me/orders/:id", element: <OrderDetailsPage /> },
       { path: "success", element: <SuccessPage /> },
-      { path: "success/", element: <SuccessPage /> },
       { path: "cancel", element: <MyWonAuctionsPage /> },
     ],
   },

@@ -6,10 +6,12 @@
   color: var(--color-dark-wood) !important;
 }
 
-.my-pages-dropdown {
+.my-pages-dropdown,
+.login-btn {
   color: var(--color-dark-wood);
 }
-.my-pages-dropdown:hover {
+.my-pages-dropdown:hover,
+.login-btn:hover {
   color: var(--color-brown);
 }
 .my-pages-link:hover {

@@ -3,7 +3,7 @@ import { getMe } from "../services/api";
 import { Link } from "react-router-dom";
 import { Container, Col, Row, Alert, Card } from "react-bootstrap";
 import LoadingSpinner from "../components/LoadingSpinner";
-import "./MyPage.css";
+import "./styles/MyPage.css";
 
 const MyPage = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,11 @@ const MyPage = () => {
   }, []);
 
   if (loading) {
-    return <LoadingSpinner />;
+    return (
+      <Container>
+        <LoadingSpinner />
+      </Container>
+    );
   }
   if (error) {
     return (
