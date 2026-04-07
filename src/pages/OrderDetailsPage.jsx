@@ -2,6 +2,7 @@ import { getMyOrderById, createCheckoutSession } from "../services/api";
 import { useEffect, useState } from "react";
 import { Container, Alert, Table, Row, Col, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
@@ -11,14 +12,12 @@ const OrderDetailsPage = () => {
 
   const handlePayment = async (orderId) => {
     try {
+      const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
       const session = await createCheckoutSession(orderId);
-      const checkoutUrl = session.data.url;
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
-      }
+      await stripe.redirectToCheckout({ sessionId: session.data.sessionId });
     } catch (error) {
-      console.error("Betalningen misslyckades:", error);
-      alert("Kunde inte starta betalningen. Försök igen senare.");
+      console.error("Payment was unsuccessful:", error);
+      alert(`Unable to process payment: ${error.message}`);
     }
   };
 
@@ -167,7 +166,6 @@ const OrderDetailsPage = () => {
                 Pay safe with Stripe
               </Button>
             )}
-            ;
           </Col>
         </Col>
       </Row>
