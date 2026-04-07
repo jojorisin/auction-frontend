@@ -12,7 +12,7 @@ const OrderDetailsPage = () => {
 
   const handlePayment = async (orderId) => {
     try {
-      const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
       const session = await createCheckoutSession(orderId);
       await stripe.redirectToCheckout({ sessionId: session.data.sessionId });
     } catch (error) {
