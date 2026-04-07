@@ -2,7 +2,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 const AddressForm = ({ addressData, onChange, onSubmit, fieldErrors = {} }) => {
   return (
-    <Form onSubmit={onSubmit} className="p-3 bg-light">
+    <Form onSubmit={onSubmit} className="p-3 address-form">
       <h3 className="mb-3">Address Details</h3>
 
       <Row>
@@ -95,7 +95,7 @@ const AddressForm = ({ addressData, onChange, onSubmit, fieldErrors = {} }) => {
         />
       </Form.Group>
 
-      <Button variant="dark" type="submit" className="w-100">
+      <Button variant="dark" type="submit" className="address-button w-100">
         Update Address
       </Button>
     </Form>

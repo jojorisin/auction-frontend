@@ -10,7 +10,7 @@ import CategoryFilter from "../components/CategoryFilter";
 import SearchBar from "../components/SearchBar";
 import AuctionCard from "../components/AuctionCard";
 import { formatSnakeCase } from "../utils/formatters";
-import "./AuctionsListPage.css";
+import "./styles/AuctionsListPage.css";
 
 const AuctionsListPage = () => {
   const {
@@ -63,7 +63,7 @@ const AuctionsListPage = () => {
         setAuctions(response.data.content);
         setLoading(false);
       } catch (err) {
-        setError("Kunde inte ladda auktioner. Försök igen senare.");
+        setError("Unable to load auctions.");
         setLoading(false);
       }
     };

@@ -4,7 +4,7 @@ import "./styles/Header.css";
 
 const Header = ({ isLoggedIn, handleResetFilters, handleLogout }) => {
   return (
-    <Navbar className="header-nav mb-4">
+    <Navbar className="header-nav mb-4 pt-3">
       <Container>
         <Navbar.Brand
           as={Link}
@@ -12,7 +12,7 @@ const Header = ({ isLoggedIn, handleResetFilters, handleLogout }) => {
           className="text-start"
           onClick={handleResetFilters}
         >
-          <h1 className="h1-header">Bautasten Auktioner</h1>
+          <h1 className="h1-header mb-0">Bautasten Auctions</h1>
         </Navbar.Brand>
 
         {isLoggedIn ? (
@@ -31,11 +31,7 @@ const Header = ({ isLoggedIn, handleResetFilters, handleLogout }) => {
             </NavDropdown.Item>
           </NavDropdown>
         ) : (
-          <Nav.Link
-            as={Link}
-            to="/auth/login"
-            className="btn btn-outline-dark px-4"
-          >
+          <Nav.Link as={Link} to="/auth/login" className="btn login-btn px-4">
             Login
           </Nav.Link>
         )}

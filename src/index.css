@@ -57,6 +57,10 @@ a {
   --color-dusty-blue-ultra-light: #eff2f4;
   --color-dark-cream: #e8e4dc;
   --color-dark-cream2: #e0dbd2;
+  --color-darker-wood: rgb(66, 52, 42);
+  --color-black-text-hover: rgb(106, 106, 106);
+  --color-lighter-cream: #fdfcfb;
+  --color-brown-black:rgb(46, 38, 34);
 }
 .red-error-link:hover {
   color: rgb(147, 54, 54) !important;

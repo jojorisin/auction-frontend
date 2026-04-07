@@ -3,7 +3,7 @@ import { Alert } from "react-bootstrap";
 const BidResponse = ({ bidResponse }) => {
   if (!bidResponse) return null;
 
-  const { isAuto, status, maxBidSum, bidSum, currentHighestBid } = bidResponse;
+  const { isAuto, status, maxBidSum} = bidResponse;
 
   const renderResponse = () => {
     switch (status) {
@@ -37,7 +37,7 @@ const BidResponse = ({ bidResponse }) => {
               </>
             ) : (
               <>
-                <strong>Oh no, you're outbid!</strong>
+                <strong>Oh no, you were outbid!</strong>
               </>
             )}
           </Alert>

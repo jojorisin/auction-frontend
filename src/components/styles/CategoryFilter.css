@@ -42,9 +42,10 @@
   background-color: transparent;
   border: none;
   font-size: 1.5rem;
+  color: var(--color-dark-wood) !important;
 }
 .scroll-arrow:hover {
-  color: var(--color-dark-wood) !important;
+  color: var(--color-brown) !important;
   cursor: pointer;
 }
 /* hide scrollbar for different browsers */

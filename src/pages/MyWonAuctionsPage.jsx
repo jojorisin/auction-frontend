@@ -4,7 +4,6 @@ import { Container, Alert, Table, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import DateTimeFormatter from "../components/DateTimeFormatter";
 import { useNavigate, Link } from "react-router-dom";
-import "./MyWonAuctionsPage.css";
 
 const MyWonAuctionsPage = () => {
   const navigate = useNavigate();
@@ -31,7 +30,11 @@ const MyWonAuctionsPage = () => {
   }, []);
 
   if (loading) {
-    return <LoadingSpinner />;
+    return (
+      <Container>
+        <LoadingSpinner />
+      </Container>
+    );
   }
   if (error) {
     return (
@@ -41,13 +44,15 @@ const MyWonAuctionsPage = () => {
     );
   }
 
-  if (!myWon) {
-    return <Alert variant="warning">No won auctions available.</Alert>;
-  }
-  if (myWon.length === 0) {
+  if (!myWon || myWon.length === 0) {
     return (
-      <Container className="mt-4">
-        <Alert variant="info">No won auctions available.</Alert>
+      <Container>
+        <h1 className="no-data-h1 ">
+          You have not won any auctions yet! Checkout out listings{" "}
+          <Link to="/">
+            <strong className="no-data-link">here.</strong>
+          </Link>
+        </h1>
       </Container>
     );
   }
@@ -99,7 +104,7 @@ const MyWonAuctionsPage = () => {
               <td>
                 <DateTimeFormatter isoString={auction.endTime} />
               </td>
-              <td className="order-link">
+              <td>
                 <Link
                   className={
                     auction?.status === "PAID"

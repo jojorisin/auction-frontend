@@ -5,17 +5,10 @@ import {
   updateContactInfo,
   updatePassword,
 } from "../services/api";
-import {
-  Container,
-  Row,
-  Col,
-  Alert,
-  Spinner,
-  ListGroup,
-  NavLink,
-} from "react-bootstrap";
+import { Container, Row, Col, Alert } from "react-bootstrap";
 import AddressForm from "../components/AddressForm";
 import ContactForm from "../components/ContactForm";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const ProfileSettingsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -72,12 +65,24 @@ const ProfileSettingsPage = () => {
     e.preventDefault();
     setFieldErrors({});
     setSuccess(null);
+    setError(null);
+
     try {
       await updateAddress(addressData);
       setSuccess("Address updated successfully!");
     } catch (err) {
-      setFieldErrors(err.response?.data || {});
-      setError("Failed to update address.");
+      const serverData = err.response?.data;
+
+      if (serverData) {
+        setFieldErrors(serverData);
+
+        const firstErrorMessage = Object.values(serverData)[0];
+        setError(
+          serverData.message || firstErrorMessage || "Validation failed.",
+        );
+      } else {
+        setError("Could not update address.");
+      }
     }
   };
 
@@ -85,19 +90,30 @@ const ProfileSettingsPage = () => {
     e.preventDefault();
     setFieldErrors({});
     setSuccess(null);
+    setError(null);
+
     try {
       await updateContactInfo(contactData);
       setSuccess("Contact info updated successfully!");
     } catch (err) {
-      setFieldErrors(err.response?.data || {});
-      setError("Failed to update contact info.");
+      const serverData = err.response?.data;
+
+      if (serverData) {
+        setFieldErrors(serverData);
+        const firstErrorMessage = Object.values(serverData)[0];
+        setError(
+          serverData.message || firstErrorMessage || "Validation failed.",
+        );
+      } else {
+        setError("Could not update contact info.");
+      }
     }
   };
 
   if (loading)
     return (
       <Container className="text-center mt-5">
-        <Spinner animation="border" />
+        <LoadingSpinner />
       </Container>
     );
 

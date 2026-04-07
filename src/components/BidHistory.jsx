@@ -4,11 +4,14 @@ import BidForm from "./BidForm";
 import { getBidHistory } from "../services/api";
 import { Client } from "@stomp/stompjs";
 import DateTimeFormatter from "./DateTimeFormatter";
-import "./BidHistory.css";
+import "./styles/BidHistory.css";
 
 const BidHistory = ({ auction }) => {
+  // --- States ---
   const [loading, setLoading] = useState(true);
   const [bids, setBids] = useState([]);
+  const [showAllBids, setShowAllBids] = useState(false);
+  const visibleBids = showAllBids ? bids : bids.slice(0, 10);
 
   // Get current user ID from JWT token
   const getCurrentUserId = () => {
@@ -80,7 +83,7 @@ const BidHistory = ({ auction }) => {
   if (!auction) return <Spinner animation="border" />;
 
   return (
-    <Container className="mt-4">
+    <Container className="bid-history-container mt-4">
       <Row>
         <Col>
           <p className="text-muted small mb-0">Current highest bid</p>
@@ -96,18 +99,25 @@ const BidHistory = ({ auction }) => {
           <BidForm
             auctionId={auction.auctionId}
             currentHighestBid={bids.length > 0 ? bids[0].bidSum : 0}
+            currentHighestBidder={bids.length > 0 ? bids[0].userId : null}
             increment={auction.increment}
+            currentUserId={currentUserId}
           />
         </Col>
 
-        <h5>Budhistorik</h5>
+        <Col xs={12}>
+          <h5 className="mt-3">Budhistorik</h5>
+        </Col>
+
         {loading ? (
-          <Spinner animation="border" size="sm" />
+          <Col className="text-center">
+            <Spinner animation="border" size="sm" />
+          </Col>
         ) : (
-          <Col>
+          <Col xs={12}>
             <Table size="sm">
               <tbody>
-                {bids.map((bid) => (
+                {visibleBids.map((bid) => (
                   <tr key={bid.bidId}>
                     <td>
                       <span
@@ -132,6 +142,21 @@ const BidHistory = ({ auction }) => {
                 ))}
               </tbody>
             </Table>
+
+            {bids.length > 10 && (
+              <div className="text-center mt-2">
+                <button
+                  className="btn btn-link text-black  text-decoration-none"
+                  onClick={() => setShowAllBids(!showAllBids)}
+                >
+                  {showAllBids ? (
+                    <>Show less ▲</>
+                  ) : (
+                    <>Show all ({bids.length}) ▼</>
+                  )}
+                </button>
+              </div>
+            )}
           </Col>
         )}
       </Row>

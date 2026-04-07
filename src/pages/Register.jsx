@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button, Alert, Container, Row, Col } from "react-bootstrap";
 import { registerUser } from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
@@ -34,14 +34,15 @@ const Register = () => {
 
   return (
     <Container>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-center p-3">
         <Col md={6}>
           <h2>Register</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formEmail">
-              <Form.Label>Email</Form.Label>
+              <Form.Label className="text-muted">Email</Form.Label>
               <Form.Control
+                className="shadow-sm mb-2"
                 type="email"
                 placeholder="Enter email"
                 value={email}
@@ -51,8 +52,9 @@ const Register = () => {
             </Form.Group>
 
             <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="text-muted">Password</Form.Label>
               <Form.Control
+                className="shadow-sm mb-2"
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -62,8 +64,9 @@ const Register = () => {
             </Form.Group>
 
             <Form.Group controlId="formConfirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
+              <Form.Label className="text-muted">Confirm Password</Form.Label>
               <Form.Control
+                className="shadow-sm mb-3"
                 type="password"
                 placeholder="Confirm Password"
                 value={confirmPassword}
@@ -72,16 +75,16 @@ const Register = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" disabled={loading}>
+            <Button variant="dark" type="submit" disabled={loading}>
               {loading ? "Registering..." : "Register"}
             </Button>
           </Form>
 
           <div className="text-center mt-3">
             <p className="mb-0">
-              Har du redan ett konto?{" "}
+              Already have an account?{" "}
               <Link to="/auth/login" className="text-decoration-none">
-                Logga in här
+                Login <strong>here</strong>
               </Link>
             </p>
           </div>

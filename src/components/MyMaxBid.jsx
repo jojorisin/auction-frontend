@@ -24,7 +24,7 @@ const MyMaxBid = ({ auctionId }) => {
   if (!isLoggedIn || myMaxBid <= 0) {
     return null;
   }
-  return <p className="text-muted small">Din max bud: {myMaxBid} kr</p>;
+  return <p className="text-muted small">Your maxbid: {myMaxBid} kr</p>;
 };
 
 export default MyMaxBid;
