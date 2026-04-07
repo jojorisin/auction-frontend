@@ -72,7 +72,6 @@ const ProfileSettingsPage = () => {
       setSuccess("Address updated successfully!");
     } catch (err) {
       const serverData = err.response?.data;
-      console.log("DEBUG - Adressfel från Java:", serverData);
 
       if (serverData) {
         setFieldErrors(serverData);
@@ -98,7 +97,6 @@ const ProfileSettingsPage = () => {
       setSuccess("Contact info updated successfully!");
     } catch (err) {
       const serverData = err.response?.data;
-      console.log("DEBUG - Kontaktfel från Java:", serverData);
 
       if (serverData) {
         setFieldErrors(serverData);
